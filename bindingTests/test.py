@@ -25,14 +25,8 @@ p_next = Proposition(id_next)
 np_now = UnaryBooleanFormula(op_not, p_now)
 np_next = UnaryBooleanFormula(op_not, p_next)
 
-formula = UnaryTemporalFormula(
-    op_globally,
-    BinaryBooleanFormula(
-        op_implies,
-        np_now,
-        UnaryTemporalFormula(op_next, np_next)
-    )
-)
+formula = Always(Implies(np_now, Next(np_next)))
+
 
 print(formula.getString())
 
@@ -75,6 +69,10 @@ print(c.getString())
 sys1 = System()
 sys1.addDeclaration(state)
 sys1.addContract(c)
+print(sys1.getString())
+
+Contract.saturate(c)
+
 print(sys1.getString())
 
 
